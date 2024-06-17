@@ -2,7 +2,7 @@ import customtkinter as ct
 from tkinter import *
 from PIL import Image, ImageTk, ImageDraw
 import matplotlib.pyplot as plt
-from matplotlib.figure import Figure  # Ajout de cette ligne
+from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 

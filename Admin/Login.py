@@ -1,6 +1,9 @@
 import customtkinter as ct
 from tkinter import *
 from PIL import Image, ImageTk
+from Dashboard import Dashboard
+
+
 
 class Login:
     def __init__(self, mac):
@@ -64,7 +67,7 @@ class Login:
         butonConnection = ct.CTkButton(self.mac, text="Se Connecter", 
                                        font=("times new roman", 18, "italic"), 
                                        fg_color="green",width=250, 
-                                       corner_radius=20)
+                                       corner_radius=20, command=self.dashB)
         butonConnection.place(x=25, y=400)
         
         
@@ -91,6 +94,11 @@ class Login:
         ct.set_appearance_mode(new_appearance_mode)
 
 
+
+
+    def dashB(self):
+        self.nouvelle_fenetre = Toplevel(self.mac)
+        self.app = Dashboard(self.nouvelle_fenetre)
 
 
 if __name__ == "__main__":
