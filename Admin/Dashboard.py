@@ -4,6 +4,8 @@ from PIL import Image, ImageTk, ImageDraw
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from GestionFiliere import Filiere
+from GestionProf import Enseigants
 
 
 class Dashboard:
@@ -13,16 +15,9 @@ class Dashboard:
         self.mac.geometry("1350x700+0+0")
 
         
-        self.MenuBarreTop()
-        self.DashMenuBarreLeft()
-        self.statistique()
-        self.frameNbrProf_Fil()
-        self.DashRightInfo()
-        
         
         
     
-    def MenuBarreTop(self):
         self.frameInfo = ct.CTkFrame(self.mac, width=1350, height=110)
         self.frameInfo.place(x=10, y=10)
 
@@ -46,8 +41,10 @@ class Dashboard:
         #                                                        command=self.change_scaling_event)
         # scaling_optionemenu.place(x=980, y=35) 
  
+ 
 
-    def DashMenuBarreLeft(self):
+
+
         
         self.frameGestion = ct.CTkFrame(self.mac, width=350, height=650)
         self.frameGestion.place(x=10, y=120)
@@ -61,7 +58,7 @@ class Dashboard:
         
         
         
-        btnProf = ct.CTkButton(self.frameGestion, text="Gestion Des Enseignants", fg_color="#2B2B2B", 
+        btnProf = ct.CTkButton(self.frameGestion, text="Gestion Des Enseignants", fg_color="#2B2B2B", command=self.GestionEnseigant,
                                                         width=320, cursor="hand",font=("times new roman", 22, "bold"))
         btnProf.place(x=25, y=100)
         
@@ -76,7 +73,7 @@ class Dashboard:
         
         
         
-        btnFiliere = ct.CTkButton(self.frameGestion, text="Gestion Des Filières", fg_color="#2B2B2B", 
+        btnFiliere = ct.CTkButton(self.frameGestion, text="Gestion Des Filières", fg_color="#2B2B2B", command=self.GestionFiliere,
                                                         width=320, cursor="hand", font=("times new roman", 22, "bold"))
         btnFiliere.place(x=25, y=180)
         
@@ -89,20 +86,6 @@ class Dashboard:
         label_logoFiliere.place(x=5, y=0)
         
         
-        
-        
-        
-        # btnNiveau = ct.CTkButton(self.frameGestion, text="Gestion Des Niveau", fg_color="#2B2B2B", 
-        #                                                 width=320, cursor="hand", font=("times new roman", 22, "bold"))
-        # btnNiveau.place(x=25, y=260)
-        
-        # lbl_Logo_Niveau = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/Niveau.png")
-        # lbl_Logo_Niveau = lbl_Logo_Niveau.resize((30, 30))
-        # self.logo_Niveau_lbl = ImageTk.PhotoImage(lbl_Logo_Niveau)
-
-        # label_logoNiveau = Label(btnNiveau, image=self.logo_Niveau_lbl, borderwidth=0,
-        #                       width=30, height=30)
-        # label_logoNiveau.place(x=5, y=0)
         
         
         
@@ -153,7 +136,8 @@ class Dashboard:
    
    
     
-    def DashRightInfo(self):
+
+
           # create scrollable frame
         
         self.frameGeneral = ct.CTkFrame(self.mac, width=980, height=250)
@@ -217,8 +201,9 @@ class Dashboard:
 
 
 
+
     
-    def frameNbrProf_Fil(self):
+
         
         self.frameNbrProf = ct.CTkFrame(self.mac, width=250, height=70)
         self.frameNbrProf.place(x=570, y=125)
@@ -264,9 +249,7 @@ class Dashboard:
         
 
 
-
-    def statistique(self):
-        
+        # ================Statistique=========
         # Frame pour le graphique
         self.frame_chart = ct.CTkFrame(self.mac, width=980, height=300)
         self.frame_chart.place(x=370, y=460)  # Utilisation de .place au lieu de .pack
@@ -292,19 +275,24 @@ class Dashboard:
         canvas = FigureCanvasTkAgg(fig, master=self.frame_chart)
         canvas.draw()
         canvas.get_tk_widget().pack()
+        
+        
+    def GestionFiliere(self):
+        self.Fenetre_Filiere = Toplevel(self.mac)
+        self.app = Filiere(self.Fenetre_Filiere)
+
+    def GestionEnseigant(self):
+        self.Fenetre_Enseigant = Toplevel(self.mac)
+        self.app = Enseigants(self.Fenetre_Enseigant)
+    
+
+
+
 
 
 
     def change_appearance_mode_event(self, new_appearance_mode):
         ct.set_appearance_mode(new_appearance_mode)
-
-
-
-    # def change_scaling_event(self, new_scaling: str):
-    #     new_scaling_float = int(new_scaling.replace("%", "")) / 100
-    #     ct.set_widget_scaling(new_scaling_float)
-
-
 
 
 if __name__ == "__main__":

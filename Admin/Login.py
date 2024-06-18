@@ -96,6 +96,7 @@ class Login:
 
 
 
+
     def dashB(self):
         self.nouvelle_fenetre = Toplevel(self.mac)
         self.app = Dashboard(self.nouvelle_fenetre)
