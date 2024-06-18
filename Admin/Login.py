@@ -79,7 +79,7 @@ class Login:
         
         
 
-        buttonRProf = ct.CTkRadioButton(self.mac, text="Prof", variable=radio_button_var, value="Prof")
+        buttonRProf = ct.CTkRadioButton(self.mac, text="Enseignant", variable=radio_button_var, value="Prof")
         buttonRProf.place(x=50, y=500)
         
         

@@ -9,7 +9,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 class Dashboard:
     def __init__(self, mac):
         self.mac = mac
-        self.mac.title("Login")
+        self.mac.title("Dashboard")
         self.mac.geometry("1350x700+0+0")
 
         
@@ -61,8 +61,8 @@ class Dashboard:
         
         
         
-        btnProf = ct.CTkButton(self.frameGestion, text="Gestion Des Prof", fg_color="#2B2B2B", 
-                                                        width=320, cursor="hand2",font=("times new roman", 25, "bold"))
+        btnProf = ct.CTkButton(self.frameGestion, text="Gestion Des Enseignants", fg_color="#2B2B2B", 
+                                                        width=320, cursor="hand",font=("times new roman", 22, "bold"))
         btnProf.place(x=25, y=100)
         
         lbl_Logo_Prof = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/Prof.png")
@@ -77,7 +77,7 @@ class Dashboard:
         
         
         btnFiliere = ct.CTkButton(self.frameGestion, text="Gestion Des Filières", fg_color="#2B2B2B", 
-                                                        width=320, cursor="hand2", font=("times new roman", 25, "bold"))
+                                                        width=320, cursor="hand", font=("times new roman", 22, "bold"))
         btnFiliere.place(x=25, y=180)
         
         lbl_Logo_Fili = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/Fillière.png")
@@ -92,23 +92,38 @@ class Dashboard:
         
         
         
-        btnNiveau = ct.CTkButton(self.frameGestion, text="Gestion Des Niveau", fg_color="#2B2B2B", 
-                                                        width=320, cursor="hand2", font=("times new roman", 25, "bold"))
-        btnNiveau.place(x=25, y=260)
+        # btnNiveau = ct.CTkButton(self.frameGestion, text="Gestion Des Niveau", fg_color="#2B2B2B", 
+        #                                                 width=320, cursor="hand", font=("times new roman", 22, "bold"))
+        # btnNiveau.place(x=25, y=260)
         
-        lbl_Logo_Niveau = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/Niveau.png")
-        lbl_Logo_Niveau = lbl_Logo_Niveau.resize((30, 30))
-        self.logo_Niveau_lbl = ImageTk.PhotoImage(lbl_Logo_Niveau)
+        # lbl_Logo_Niveau = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/Niveau.png")
+        # lbl_Logo_Niveau = lbl_Logo_Niveau.resize((30, 30))
+        # self.logo_Niveau_lbl = ImageTk.PhotoImage(lbl_Logo_Niveau)
 
-        label_logoNiveau = Label(btnNiveau, image=self.logo_Niveau_lbl, borderwidth=0,
+        # label_logoNiveau = Label(btnNiveau, image=self.logo_Niveau_lbl, borderwidth=0,
+        #                       width=30, height=30)
+        # label_logoNiveau.place(x=5, y=0)
+        
+        
+        
+        
+        btnEmploisDuTemps = ct.CTkButton(self.frameGestion, text="Emplois du temps", fg_color="#2B2B2B", 
+                                                        width=320, cursor="hand", font=("times new roman", 22, "bold"))
+        btnEmploisDuTemps.place(x=25, y=260)
+        
+        lbl_Logo_Emplois_tmp = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/empl tmps.png")
+        lbl_Logo_Emplois_tmp = lbl_Logo_Emplois_tmp.resize((30, 30))
+        self.logo_Emplois_tmp_lbl = ImageTk.PhotoImage(lbl_Logo_Emplois_tmp)
+
+        label_logoEmplois_tmp = Label(btnEmploisDuTemps, image=self.logo_Emplois_tmp_lbl, borderwidth=0,
                               width=30, height=30)
-        label_logoNiveau.place(x=5, y=0)
+        label_logoEmplois_tmp.place(x=5, y=0)
         
         
         
         
         btnRapport = ct.CTkButton(self.frameGestion, text="Gestion Des Rapports", fg_color="#2B2B2B", 
-                                                        width=320, cursor="hand2", font=("times new roman", 25, "bold"))
+                                                        width=320, cursor="hand", font=("times new roman", 22, "bold"))
         btnRapport.place(x=25, y=340)
         
         lbl_Logo_Rapport = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/Rapport.png")
@@ -120,24 +135,13 @@ class Dashboard:
         label_logoRapport.place(x=5, y=0)
  
        
-   
-        btnEmploisDuTemps = ct.CTkButton(self.frameGestion, text="Emplois du temps", fg_color="#2B2B2B", 
-                                                        width=320, cursor="hand2", font=("times new roman", 25, "bold"))
-        btnEmploisDuTemps.place(x=25, y=420)
         
-        lbl_Logo_Emplois_tmp = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/empl tmps.png")
-        lbl_Logo_Emplois_tmp = lbl_Logo_Emplois_tmp.resize((30, 30))
-        self.logo_Emplois_tmp_lbl = ImageTk.PhotoImage(lbl_Logo_Emplois_tmp)
-
-        label_logoEmplois_tmp = Label(btnEmploisDuTemps, image=self.logo_Emplois_tmp_lbl, borderwidth=0,
-                              width=30, height=30)
-        label_logoEmplois_tmp.place(x=5, y=0)
         
         
    
         btnParametre = ct.CTkButton(self.frameGestion, text="Paramètre", fg_color="#2B2B2B", 
-                                                        width=320, cursor="hand2", font=("times new roman", 25, "bold"))
-        btnParametre.place(x=25, y=500)
+                                                        width=320, cursor="hand", font=("times new roman", 22, "bold"))
+        btnParametre.place(x=25, y=420)
         
         lbl_Logo_Parametre = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/Parametre.png")
         lbl_Logo_Parametre = lbl_Logo_Parametre.resize((30, 30))
@@ -148,22 +152,40 @@ class Dashboard:
         label_logoParametre.place(x=5, y=0)
    
    
-   
     
     def DashRightInfo(self):
           # create scrollable frame
         
-        self.scrollable_frame = ct.CTkScrollableFrame(self.mac,label_text="C", height=70, width=950)
-        self.scrollable_frame.place(x=370, y=200)
+        self.frameGeneral = ct.CTkFrame(self.mac, width=980, height=250)
+        self.frameGeneral.place(x=370, y=200)
         
-        lblProfe = ct.CTkLabel(self.mac, text="Professeur", fg_color="#3B3B3B",font=("times new roman", 15, "bold"))
-        lblProfe.place(x=450, y=205)
+        self.scrollable_frame = ct.CTkScrollableFrame(self.frameGeneral, label_text=".", height=70, width=950)
+        self.scrollable_frame.place(x=5 ,y=0)
         
-        entryRecher = ct.CTkEntry(self.mac, placeholder_text="Recherche",bg_color="#3B3B3B", width=200)
-        entryRecher.place(x=825, y=205)
+        lblID = ct.CTkLabel(self.frameGeneral, text="ID", fg_color="green",text_color="white",corner_radius=10, font=("times new roman", 18, "bold"))
+        lblID.place(x=20, y=35)
         
-        buttonRecherche = ct.CTkButton(self.mac, text="🔍", corner_radius=30, width=5, bg_color="#3B3B3B",fg_color="green",)
-        buttonRecherche.place(x=1050, y=205)
+        
+        lblNom = ct.CTkLabel(self.frameGeneral, text="Nom", fg_color="green",text_color="white",corner_radius=10, font=("times new roman", 18, "bold"))
+        lblNom.place(x=210, y=35) 
+        
+        
+        lblNote = ct.CTkLabel(self.frameGeneral,text="Note",fg_color="green",text_color="white",corner_radius=10,  font=("times new roman", 18, "bold") )
+        lblNote.place(x=565, y=35)
+        
+        
+        lblPourcentage = ct.CTkLabel(self.frameGeneral,text="Pourcentage",fg_color="green",text_color="white",corner_radius=10,  font=("times new roman", 18, "bold") )
+        lblPourcentage.place(x=820, y=35)
+        
+        
+        lblEnseignant = ct.CTkLabel(self.frameGeneral, text="Enseignants", font=("times new roman", 20, "bold"))
+        lblEnseignant.place(x=18, y=3)
+        
+        entryRecherche = ct.CTkEntry(self.frameGeneral, placeholder_text="Recherche", width=200)
+        entryRecherche.place(x=350, y=2)
+        
+        buttonRecherche = ct.CTkButton(self.frameGeneral, text="🔍", corner_radius=30, width=5, fg_color="green",)
+        buttonRecherche.place(x=600, y=5)
         
         # self.scrollable_frame_buttonDelete = []  
         self.scrollable_frame_labelId = [] 
@@ -211,7 +233,7 @@ class Dashboard:
                                                     width=80, height=80)
         label_IconProf.place(x=160, y=5)
         
-        labelPro = ct.CTkLabel(self.frameNbrProf, text="Professeur", font=("times new roman", 20, "bold"))
+        labelPro = ct.CTkLabel(self.frameNbrProf, text="Enseigant", font=("times new roman", 20, "bold"))
         labelPro.place(x=10, y=10)
         
         labelNbrPro = ct.CTkLabel(self.frameNbrProf, text="0", font=("times new roman", 25, "bold"))
@@ -240,8 +262,6 @@ class Dashboard:
         labelNbrFiliere = ct.CTkLabel(self.frameNbrFili, text="0", font=("times new roman", 25, "bold"))
         labelNbrFiliere.place(x=10, y=30)
         
-        
-        
 
 
 
@@ -261,7 +281,7 @@ class Dashboard:
         fig = Figure(figsize=(9.8, 3), dpi=100)
         ax = fig.add_subplot(111)
         
-        ax.bar(range(len(Prof)), Prof, width=0.4, label='Professeur', align='center')
+        ax.bar(range(len(Prof)), Prof, width=0.4, label='Enseigants', align='center')
         ax.bar([x + 0.4 for x in range(len(filieres))], filieres, width=0.4, label='Filieres', align='edge')
         ax.set_xlabel('')
         ax.set_ylabel('')
