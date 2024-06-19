@@ -31,7 +31,7 @@ class Enseigants:
         labelNomEns = ct.CTkLabel(self.frame1, text="Nom", font=("times new roman", 18, "bold"))
         labelNomEns.place(x=10, y=60)
         
-        entryNomEns = ct.CTkEntry(self.frame1, placeholder_text="Nom de l'Enseigant", 
+        entryNomEns = ct.CTkEntry(self.frame1, placeholder_text="Nom de l'Enseignant", 
                                   width=300, font=("times new roman", 15, "bold"))
         entryNomEns.place(x=80, y=60)
         

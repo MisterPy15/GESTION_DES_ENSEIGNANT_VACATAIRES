@@ -7,18 +7,18 @@ from PIL import Image, ImageTk
 class Filiere:
     def __init__(self, mac):
         self.mac = mac
-        self.mac.title("Gestion de Filières")
+        self.mac.title("Gestion des Filières")
         self.mac.geometry("850x700+300+0")
         self.mac.resizable(0,0)
         
         
-        self.Elements_Du_haut()
-        self.Formulaire()
-        self.tableDetails()
+        # self.Elements_Du_haut()
+        # self.Formulaire()
+        # self.tableDetails()
         
         
         
-    def Formulaire(self):
+    # def Formulaire(self):
         
         self.frame1 = ct.CTkFrame(self.mac, width=400, height=200, corner_radius=15)
         self.frame1.place(x=10, y=200)
@@ -48,7 +48,7 @@ class Filiere:
                                    corner_radius=8, cursor="hand", font=("times new roman", 20, "bold"))
         buttonAjout.place(x=260, y=150)
         
-    def tableDetails(self):
+    # def tableDetails(self):
          
         self.frameGeneral = ct.CTkFrame(self.mac, width=380, height=450)
         self.frameGeneral.place(x=420, y=200)
@@ -88,7 +88,7 @@ class Filiere:
             self.scrollable_frame_labelFil.append(labelFil)
 
 
-    def Elements_Du_haut(self):
+    # def Elements_Du_haut(self):
         
         apparenceOption = ct.CTkOptionMenu(self.mac, values=["Dark", "Light", "System"], corner_radius=20,
                                            command=self.change_appearance_mode_event, fg_color="green")

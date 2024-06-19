@@ -6,6 +6,7 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from GestionFiliere import Filiere
 from GestionProf import Enseigants
+from GestionRapport import Rapport
 
 
 class Dashboard:
@@ -105,7 +106,7 @@ class Dashboard:
         
         
         
-        btnRapport = ct.CTkButton(self.frameGestion, text="Gestion Des Rapports", fg_color="#2B2B2B", 
+        btnRapport = ct.CTkButton(self.frameGestion, text="Gestion Des Rapports", fg_color="#2B2B2B", command=self.GestionRapports,
                                                         width=320, cursor="hand", font=("times new roman", 22, "bold"))
         btnRapport.place(x=25, y=340)
         
@@ -176,6 +177,7 @@ class Dashboard:
         self.scrollable_frame_labelProf = [] 
         self.scrollable_frame_labelNote = [] 
         self.scrollable_frame_labelPourcent = [] 
+        
         
         for i in range(5):
             labelId = ct.CTkLabel(self.scrollable_frame, text=f"Id {i+1}")
@@ -281,9 +283,15 @@ class Dashboard:
         self.Fenetre_Filiere = Toplevel(self.mac)
         self.app = Filiere(self.Fenetre_Filiere)
 
+
     def GestionEnseigant(self):
         self.Fenetre_Enseigant = Toplevel(self.mac)
         self.app = Enseigants(self.Fenetre_Enseigant)
+    
+    
+    def GestionRapports(self):
+        self.Fenetre_Rapport = Toplevel(self.mac)
+        self.app = Rapport(self.Fenetre_Rapport)
     
 
 
