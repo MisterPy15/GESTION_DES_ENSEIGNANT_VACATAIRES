@@ -25,11 +25,11 @@ class Enseignants:
     def connect_to_db(self):
         try:
             connection = mysql.connector.connect(
-                host='localhost',  
-                database='vacataire',  
-                user='root',  
-                password='root', 
-                port=8889 
+                host='localhost',  # Remplacez par votre hôte de base de données
+                database='vacataire',  # Remplacez par le nom de votre base de données
+                user='root',  # Remplacez par votre nom d'utilisateur
+                password='root',  # Remplacez par votre mot de passe
+                port=8889  # Remplacez par votre port
             )
             if connection.is_connected():
                 print("Connexion réussie à la base de données")
@@ -73,86 +73,39 @@ class Enseignants:
 
 
     def modifier_enseignant(self, id, nom, prenom, email, mot_de_passe):
-        if nom == "" or prenom == "" or email == "" or mot_de_passe == "":
-            messagebox.showerror("Attention", "Choisissez un Enseignant à Modifier", parent=self.mac)
-        else:
-            try:
-                cursor = self.db_connection.cursor()
-                cursor.execute(
-                    "UPDATE enseignant SET Nom = %s, Prenom = %s, Email = %s, Mot_Passe = %s WHERE Id_Enseignant = %s",
-                    (nom, prenom, email, mot_de_passe, id)
-                )
-                self.db_connection.commit()
-                messagebox.showinfo("Succès", "Modification réussie.", parent=self.mac)
-                self.ViderChamp()
-                self.update_table()
-            except Exception as es:
-                messagebox.showerror("Attention", f"Erreur Lors de la Modification {str(es)}", parent=self.mac)
-
-
-
-
-    def modifier_enseignant_callback(self):
-        id = self.get_selected_enseignant_id()
-        if id:
-            nom = self.entryNomEns.get()
-            prenom = self.entryPrenomEns.get()
-            email = self.entryEmailEns.get()
-            mot_de_passe = self.entryPasswordEns.get()
-            self.modifier_enseignant(id, nom, prenom, email, mot_de_passe)
-        else:
-            messagebox.showerror("Attention", "Sélectionnez un enseignant à modifier", parent=self.mac)
-
+            if nom == "" or prenom == "" or email == "" or mot_de_passe == "":
+                messagebox.showerror("Attention", "Choisisez un Enseignant a Modifier", parent=self.mac)
+            else:
+                try:
+                    cursor = self.db_connection.cursor()
+                    cursor.execute("UPDATE enseignant SET Nom = %s, Prenom = %s, Email = %s, Mot_Passe = %s WHERE Id_Enseignant = %s",
+                                (nom, prenom, email, mot_de_passe, id))
+                    self.db_connection.commit()
+                    messagebox.showinfo("Succès", "Modification réussie.", parent=self.mac)
+                    ViderChamp()
+                    self.update_table()
+                except Exception as es:
+                    messagebox.showerror("Attention", f"Erreur Lors de la Modification {str(es)}", parent=self.mac)
 
 
 
     def supprimer_enseignant(self, id):
-        if nom == "" or prenom == "" or email == "" or mot_de_passe == "":
-            messagebox.showerror("Attention", "Choisissez un Enseignant à Supprimer.", parent=self.mac)
-        else:
-            try:
-                cursor = self.db_connection.cursor()
-                cursor.execute("DELETE FROM enseignant WHERE Id_Enseignant = %s", (id,))
-                self.db_connection.commit()
-                self.update_table()  # Update the table after deleting an enseignant
-                self.ViderChamp()
-            except Exception as es:
-                messagebox.showerror("Attention", f"Erreur Lors de la Suppression {str(es)}", parent=self.mac)
-
-
-
-    def supprimer_enseignant_callback(self):
-        id = self.get_selected_enseignant_id()
-        if id:
-            self.supprimer_enseignant(id)
-        else:
-            messagebox.showerror("Attention", "Sélectionnez un enseignant à supprimer", parent=self.mac)
+        cursor = self.db_connection.cursor()
+        cursor.execute("DELETE FROM enseignant WHERE Id_Enseignant = %s", (id,))
+        self.db_connection.commit()
+        self.update_table()  # Update the table after deleting an enseignant
 
 
 
     def rechercher_enseignant(self, recherche):
-        if recherche =="":
-            messagebox.showerror("Attention", "Entrez Un Id ou Un Nom", parent=self.mac)
-        else:
-            try:
-                cursor = self.db_connection.cursor()
-                query = "SELECT * FROM enseignant WHERE Id_Enseignant = %s OR Nom LIKE %s"
-                cursor.execute(query, (recherche, f"%{recherche}%"))
-                result = cursor.fetchall()
-                self.afficher_enseignants(result)  # Affiche les résultats de la recherche
-                if result:
-                    self.remplir_champs(result[0])
-            except Exception as es:
-                messagebox.showerror("Attention", f"Erreur Du à {str(es)}", parent=self.mac)
+        cursor = self.db_connection.cursor()
+        query = "SELECT * FROM enseignant WHERE Id_Enseignant = %s OR Nom LIKE %s"
+        cursor.execute(query, (recherche, f"%{recherche}%"))
+        result = cursor.fetchall()
+        self.afficher_enseignants(result)  # Affiche les résultats de la recherche
+        if result:
+            self.remplir_champs(result[0])
 
-
-
-    def rechercher_enseignant_callback(self):
-        if self.entryRecherche.get() =="":
-            messagebox.showerror("Attention", "Entrez Un Id ou Un Nom", parent=self.mac)
-        else:
-            recherche = self.entryRecherche.get()
-            self.rechercher_enseignant(recherche)
 
 
     def remplir_champs(self, enseignant):
@@ -265,6 +218,23 @@ class Enseignants:
 
 
 
+    def modifier_enseignant_callback(self):
+        id = self.get_selected_enseignant_id()
+        if id:
+            nom = self.entryNomEns.get()
+            prenom = self.entryPrenomEns.get()
+            email = self.entryEmailEns.get()
+            mot_de_passe = self.entryPasswordEns.get()
+            self.modifier_enseignant(id, nom, prenom, email, mot_de_passe)
+
+
+
+    def supprimer_enseignant_callback(self):
+        id = self.get_selected_enseignant_id()
+        if id:
+            self.supprimer_enseignant(id)
+
+
 
     def get_selected_enseignant_id(self):
         return getattr(self, 'selected_enseignant_id', None)
@@ -309,6 +279,11 @@ class Enseignants:
                                      corner_radius=10, font=("times new roman", 12, "bold"))
         lblPasswordEns.place(x=500, y=85)
 
+
+
+    def rechercher_enseignant_callback(self):
+        recherche = self.entryRecherche.get()
+        self.rechercher_enseignant(recherche)
 
 
 

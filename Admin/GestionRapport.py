@@ -11,8 +11,10 @@ class Rapport:
     def __init__(self, mac):
         self.mac = mac
         self.mac.title("Gestion des Rapports")
-        self.mac.geometry("1040x700+150+0")
+        self.mac.geometry("1040x700+120+0")
         self.mac.resizable(0, 0)
+        self.mac.focus_force()
+        self.mac.grab_set()
 
         apparenceOption = ct.CTkOptionMenu(self.mac, values=["Dark", "Light", "System"], corner_radius=20,
                                            command=self.change_appearance_mode_event, fg_color="green")

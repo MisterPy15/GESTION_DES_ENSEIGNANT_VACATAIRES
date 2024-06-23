@@ -5,17 +5,22 @@ import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from GestionFiliere import Filiere
-from GestionProf import Enseigants
+from GestionProf import Enseignants
 from GestionRapport import Rapport
+from GestionEmploiDuTemps import GestionEmploiDuTempsApp
+
+
+
 
 
 class Dashboard:
-    def __init__(self, mac):
+    def __init__(self, mac, nom, prenom):
         self.mac = mac
         self.mac.title("Dashboard")
         self.mac.geometry("1350x700+0+0")
-
         
+        self.nom = nom
+        self.prenom = prenom
         
         
     
@@ -30,9 +35,13 @@ class Dashboard:
                               width=200, height=100)
         label_logoUTA.place(x=10, y=5)
 
-        labeBievenue = ct.CTkLabel(self.frameInfo, text="Bon retour Parmi nous Admin: ", 
+        labeBievenue = ct.CTkLabel(self.frameInfo, text=f"Bon retour Parmi nous Admin: {self.prenom} {self.nom}", 
                                    font=("times new roman", 35, "bold"))
-        labeBievenue.place(x=480, y=25)
+        labeBievenue.place(x=460, y=25)
+        
+        # labeBievenue = ct.CTkLabel(self.frameInfo, text=f"Bon retour Parmi nous Admin: Py", 
+        #                            font=("times new roman", 35, "bold"))
+        # labeBievenue.place(x=460, y=25)
 
         apparenceOption = ct.CTkOptionMenu(self.frameInfo, values=["Dark", "Light", "System"], corner_radius=20,
                                            command=self.change_appearance_mode_event, fg_color="green")
@@ -91,7 +100,7 @@ class Dashboard:
         
         
         
-        btnEmploisDuTemps = ct.CTkButton(self.frameGestion, text="Emplois du temps", fg_color="#2B2B2B", 
+        btnEmploisDuTemps = ct.CTkButton(self.frameGestion, text="Emplois du temps", fg_color="#2B2B2B", command=self.EmploiDutemps,
                                                         width=320, cursor="hand", font=("times new roman", 22, "bold"))
         btnEmploisDuTemps.place(x=25, y=260)
         
@@ -223,7 +232,7 @@ class Dashboard:
         labelPro = ct.CTkLabel(self.frameNbrProf, text="Enseigant", font=("times new roman", 20, "bold"))
         labelPro.place(x=10, y=10)
         
-        labelNbrPro = ct.CTkLabel(self.frameNbrProf, text="0", font=("times new roman", 25, "bold"))
+        labelNbrPro = ct.CTkLabel(self.frameNbrProf, text=f"0", font=("times new roman", 25, "bold"))
         labelNbrPro.place(x=10, y=30)
         
         
@@ -246,7 +255,7 @@ class Dashboard:
         labelFiliere = ct.CTkLabel(self.frameNbrFili, text="Filière", font=("times new roman", 20, "bold"))
         labelFiliere.place(x=10, y=10)
         
-        labelNbrFiliere = ct.CTkLabel(self.frameNbrFili, text="0", font=("times new roman", 25, "bold"))
+        labelNbrFiliere = ct.CTkLabel(self.frameNbrFili, text=f"0", font=("times new roman", 25, "bold"))
         labelNbrFiliere.place(x=10, y=30)
         
 
@@ -266,7 +275,7 @@ class Dashboard:
         fig = Figure(figsize=(9.8, 3), dpi=100)
         ax = fig.add_subplot(111)
         
-        ax.bar(range(len(Prof)), Prof, width=0.4, label='Enseigants', align='center')
+        ax.bar(range(len(Prof)), Prof, width=0.4, label='Enseignants', align='center')
         ax.bar([x + 0.4 for x in range(len(filieres))], filieres, width=0.4, label='Filieres', align='edge')
         ax.set_xlabel('')
         ax.set_ylabel('')
@@ -286,12 +295,19 @@ class Dashboard:
 
     def GestionEnseigant(self):
         self.Fenetre_Enseigant = Toplevel(self.mac)
-        self.app = Enseigants(self.Fenetre_Enseigant)
+        self.app = Enseignants(self.Fenetre_Enseigant)
+    
     
     
     def GestionRapports(self):
         self.Fenetre_Rapport = Toplevel(self.mac)
         self.app = Rapport(self.Fenetre_Rapport)
+    
+    
+    
+    def EmploiDutemps(self):
+        self.Fenetre_EmploiTemps = Toplevel(self.mac)
+        self.app = GestionEmploiDuTempsApp(self.Fenetre_EmploiTemps)
     
 
 
