@@ -107,9 +107,7 @@ class Enseignants:
 
 
     def supprimer_enseignant(self, id):
-        if nom == "" or prenom == "" or email == "" or mot_de_passe == "":
-            messagebox.showerror("Attention", "Choisissez un Enseignant à Supprimer.", parent=self.mac)
-        else:
+        
             try:
                 cursor = self.db_connection.cursor()
                 cursor.execute("DELETE FROM enseignant WHERE Id_Enseignant = %s", (id,))

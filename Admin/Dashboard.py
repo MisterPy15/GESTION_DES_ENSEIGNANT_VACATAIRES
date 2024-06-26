@@ -7,7 +7,8 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from GestionFiliere import Filiere
 from GestionProf import Enseignants
 from GestionRapport import Rapport
-from GestionEmploiDuTemps import GestionEmploiDuTempsApp
+import mysql.connector
+from GestionEmploiDuTemps import EmploiTemps
 
 
 
@@ -21,6 +22,18 @@ class Dashboard:
         
         self.nom = nom
         self.prenom = prenom
+        
+        
+        
+        self.conn = mysql.connector.connect(
+                host="localhost",
+                user="root", 
+                password="root",  
+                database="vacataire",
+                port=8889
+            )
+        self.cursor = self.conn.cursor()
+
         
         
     
@@ -150,10 +163,10 @@ class Dashboard:
 
           # create scrollable frame
         
-        self.frameGeneral = ct.CTkFrame(self.mac, width=980, height=250)
-        self.frameGeneral.place(x=370, y=200)
+        self.frameGeneral = ct.CTkFrame(self.mac, width=680, height=250)
+        self.frameGeneral.place(x=470, y=200)
         
-        self.scrollable_frame = ct.CTkScrollableFrame(self.frameGeneral, label_text=".", height=70, width=950)
+        self.scrollable_frame = ct.CTkScrollableFrame(self.frameGeneral, label_text=".", height=70, width=650)
         self.scrollable_frame.place(x=5 ,y=0)
         
         lblID = ct.CTkLabel(self.frameGeneral, text="ID", fg_color="green",text_color="white",corner_radius=10, font=("times new roman", 18, "bold"))
@@ -161,49 +174,33 @@ class Dashboard:
         
         
         lblNom = ct.CTkLabel(self.frameGeneral, text="Nom", fg_color="green",text_color="white",corner_radius=10, font=("times new roman", 18, "bold"))
-        lblNom.place(x=210, y=35) 
+        lblNom.place(x=480, y=35) 
         
-        
-        lblNote = ct.CTkLabel(self.frameGeneral,text="Note",fg_color="green",text_color="white",corner_radius=10,  font=("times new roman", 18, "bold") )
-        lblNote.place(x=565, y=35)
-        
-        
-        lblPourcentage = ct.CTkLabel(self.frameGeneral,text="Pourcentage",fg_color="green",text_color="white",corner_radius=10,  font=("times new roman", 18, "bold") )
-        lblPourcentage.place(x=820, y=35)
-        
+       
         
         lblEnseignant = ct.CTkLabel(self.frameGeneral, text="Enseignants", font=("times new roman", 20, "bold"))
         lblEnseignant.place(x=18, y=3)
         
         entryRecherche = ct.CTkEntry(self.frameGeneral, placeholder_text="Recherche", width=200)
-        entryRecherche.place(x=350, y=2)
+        entryRecherche.place(x=200, y=2)
         
         buttonRecherche = ct.CTkButton(self.frameGeneral, text="🔍", corner_radius=30, width=5, fg_color="green",)
-        buttonRecherche.place(x=600, y=5)
+        buttonRecherche.place(x=420, y=5)
         
         # self.scrollable_frame_buttonDelete = []  
         self.scrollable_frame_labelId = [] 
         self.scrollable_frame_labelProf = [] 
-        self.scrollable_frame_labelNote = [] 
-        self.scrollable_frame_labelPourcent = [] 
         
-        
+    
         for i in range(5):
             labelId = ct.CTkLabel(self.scrollable_frame, text=f"Id {i+1}")
             labelId.grid(row=i, column=0, padx=10, pady=10)  # Utilisation de grid() au lieu de place()
             self.scrollable_frame_labelId.append(labelId)
             
             labelProf = ct.CTkLabel(self.scrollable_frame, text=f"NomProf {i+1}")
-            labelProf.grid(row=i, column=1, padx=150, pady=10)  # Utilisation de grid() au lieu de place()
+            labelProf.grid(row=i, column=1, padx=420, pady=10)  # Utilisation de grid() au lieu de place()
             self.scrollable_frame_labelProf.append(labelProf)
             
-            labelNote = ct.CTkLabel(self.scrollable_frame, text=f"Note {i+1}")
-            labelNote.grid(row=i, column=2, padx=150, pady=10)  # Utilisation de grid() au lieu de place()
-            self.scrollable_frame_labelNote.append(labelNote)
-            
-            labelPourcent = ct.CTkLabel(self.scrollable_frame, text=f"0%")
-            labelPourcent.grid(row=i, column=3, padx=100, pady=10)  # Utilisation de grid() au lieu de place()
-            self.scrollable_frame_labelPourcent.append(labelPourcent)
             
             
             # buttonDelete = ct.CTkButton(self.scrollable_frame, text="Supprimer", fg_color="red")
@@ -229,11 +226,15 @@ class Dashboard:
                                                     width=80, height=80)
         label_IconProf.place(x=160, y=5)
         
+        
         labelPro = ct.CTkLabel(self.frameNbrProf, text="Enseigant", font=("times new roman", 20, "bold"))
         labelPro.place(x=10, y=10)
         
-        labelNbrPro = ct.CTkLabel(self.frameNbrProf, text=f"0", font=("times new roman", 25, "bold"))
+        labelNbrPro = ct.CTkLabel(self.frameNbrProf, text="", font=("times new roman", 25, "bold"))
         labelNbrPro.place(x=10, y=30)
+        
+        nbr_enseignants = self.get_nbr_enseignants()
+        labelNbrPro.configure(text=str(nbr_enseignants))
         
         
         
@@ -257,6 +258,10 @@ class Dashboard:
         
         labelNbrFiliere = ct.CTkLabel(self.frameNbrFili, text=f"0", font=("times new roman", 25, "bold"))
         labelNbrFiliere.place(x=10, y=30)
+        nbr_filiere = self.get_nbr_filieres()
+        
+        labelNbrFiliere.configure(text=str(nbr_filiere))
+        
         
 
 
@@ -287,7 +292,24 @@ class Dashboard:
         canvas.draw()
         canvas.get_tk_widget().pack()
         
-        
+    
+    
+    def get_nbr_enseignants(self):
+        self.cursor.execute("SELECT COUNT(*) FROM enseignant")
+        result = self.cursor.fetchone()
+        return result[0] if result else 0
+    
+    def get_nbr_filieres(self):
+        self.cursor.execute("SELECT COUNT(*) FROM filière")
+        result = self.cursor.fetchone()
+        return result[0] if result else 0
+
+    def close_connection(self):
+        self.cursor.close()
+        self.conn.close()
+
+    
+    
     def GestionFiliere(self):
         self.Fenetre_Filiere = Toplevel(self.mac)
         self.app = Filiere(self.Fenetre_Filiere)
@@ -307,10 +329,8 @@ class Dashboard:
     
     def EmploiDutemps(self):
         self.Fenetre_EmploiTemps = Toplevel(self.mac)
-        self.app = GestionEmploiDuTempsApp(self.Fenetre_EmploiTemps)
+        self.app = EmploiTemps(self.Fenetre_EmploiTemps)
     
-
-
 
 
 

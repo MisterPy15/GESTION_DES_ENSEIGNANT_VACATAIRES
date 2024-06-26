@@ -23,11 +23,11 @@ class Filiere:
     def connect_to_db(self):
         try:
             connection = mysql.connector.connect(
-                host='localhost',  # Remplacez par votre hôte de base de données
-                database='vacataire',  # Remplacez par le nom de votre base de données
-                user='root',  # Remplacez par votre nom d'utilisateur
-                password='root',  # Remplacez par votre mot de passe
-                port=8889  # Remplacez par votre port
+                host='localhost',  
+                database='vacataire', 
+                user='root',  
+                password='root', 
+                port=8889
             )
             if connection.is_connected():
                 print("Connexion réussie à la base de données")

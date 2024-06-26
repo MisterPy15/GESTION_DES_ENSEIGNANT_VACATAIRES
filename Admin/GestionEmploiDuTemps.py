@@ -1,136 +1,153 @@
 import customtkinter as ctk
-import tkinter as tk
-from tkinter import ttk
+from tkinter import *
+from tkinter import messagebox
+import mysql.connector
 
 
+class EmploiTemps:
+    def __init__(self, mac):
+        # Connexion à la base de données
+        self.connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="root",
+            database="vacataire",
+            port=8889
+        )
+        self.cursor = self.connection.cursor()
 
-class GestionEmploiDuTempsApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Gestion d'Emplois Du Temps - UTA")
-        self.root.geometry("800x700+200+0")
+        # Initialisation de la fenêtre principale
+        self.mac = mac
+        self.mac.title("Gestion d'emploi du temps")
+        self.mac.geometry("960x700+45+0")
+        self.mac.resizable(0, 0)
         self.mac.focus_force()
         self.mac.grab_set()
 
-        self.switch_var = ctk.StringVar(value="Light")
+        # Création des variables
+        self.jours = ["LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI"]
+        self.heurs = ["08h à 12h", "13h à 17h"]
+        self.schedule = [["" for _ in range(8)] for _ in range(11)]
 
-        # Configuration de la fenêtre principale
-        self.setup_main_frame()
-        self.setup_entries()
-        self.setup_buttons()
-        self.setup_table()
+        self.Filiere_var = ctk.StringVar()
+        self.Module_var = ctk.StringVar()
+        self.jour_var = ctk.StringVar(value=self.jours[0])
+        self.heur_var = ctk.StringVar(value=self.heurs[0])
+        self.niveau_var = ctk.StringVar()
+        self.salle_var = ctk.StringVar()
+        self.Enseigant_id_var = ctk.StringVar()
 
-    def change_theme(self):
-        if self.switch_var.get() == "Light":
-            ctk.set_appearance_mode("light")
-        else:
-            ctk.set_appearance_mode("dark")
+        # Création des champs de saisie
+        self.create_widgets()
 
-    def setup_main_frame(self):
-        title = ctk.CTkLabel(self.root, text="Gestion D'emploi Du Temps", font=("Arial", 24))
-        title.pack(pady=20)
+        # Création d'un tableau pour l'emploi du temps
+        self.create_schedule_table()
 
-    def setup_entries(self):
-        frame_entries = ctk.CTkFrame(self.root)
-        frame_entries.pack(pady=10)
+        # Boucle principale
+        self.mac.mainloop()
 
-        label_enseignant = ctk.CTkLabel(frame_entries, text="Enseignant")
-        label_enseignant.grid(row=0, column=0, padx=10, pady=10)
-        entry_enseignant = ctk.CTkEntry(frame_entries, placeholder_text="Code de l'Enseignant")
-        entry_enseignant.grid(row=0, column=1, padx=10, pady=10)
+    def create_widgets(self):
+        ctk.CTkLabel(self.mac, text="ID Enseignant:").place(x=35, y=15)
+        Enseigant_id_entry = ctk.CTkEntry(self.mac, textvariable=self.Enseigant_id_var)
+        Enseigant_id_entry.place(x=130, y=15)
 
-        label_filiere = ctk.CTkLabel(frame_entries, text="Filière")
-        label_filiere.grid(row=0, column=2, padx=10, pady=10)
-        entry_filiere = ctk.CTkEntry(frame_entries, placeholder_text="Code de la filière")
-        entry_filiere.grid(row=0, column=3, padx=10, pady=10)
+        ctk.CTkLabel(self.mac, text="Module:").place(x=280, y=15)
+        Module_entry = ctk.CTkEntry(self.mac, textvariable=self.Module_var)
+        Module_entry.place(x=350, y=15)
 
-        label_cours = ctk.CTkLabel(frame_entries, text="Cours")
-        label_cours.grid(row=1, column=0, padx=10, pady=10)
-        entry_cours = ctk.CTkEntry(frame_entries, placeholder_text="Nom du cours")
-        entry_cours.grid(row=1, column=1, padx=10, pady=10)
+        ctk.CTkLabel(self.mac, text="Heure:").place(x=510, y=15)
+        heur_menu = ctk.CTkOptionMenu(self.mac, variable=self.heur_var, values=self.heurs)
+        heur_menu.place(x=570, y=15)
 
-        label_niveau = ctk.CTkLabel(frame_entries, text="Niveau")
-        label_niveau.grid(row=1, column=2, padx=10, pady=10)
-        entry_niveau = ctk.CTkEntry(frame_entries, placeholder_text="Niveau")
-        entry_niveau.grid(row=1, column=3, padx=10, pady=10)
+        ctk.CTkLabel(self.mac, text="Filière:").place(x=35, y=90)
+        Filiere_entry = ctk.CTkEntry(self.mac, textvariable=self.Filiere_var)
+        Filiere_entry.place(x=80, y=90)
 
-    def setup_buttons(self):
-        button_frame = ctk.CTkFrame(self.root)
-        button_frame.pack(pady=10)
+        ctk.CTkLabel(self.mac, text="Niveau").place(x=280, y=90)
+        Niveau_menu = ctk.CTkEntry(self.mac, textvariable=self.niveau_var)
+        Niveau_menu.place(x=350, y=90)
 
-        btn_modifier = ctk.CTkButton(button_frame, text="Modifier", fg_color="orange")
-        btn_modifier.grid(row=0, column=0, padx=10, pady=10)
+        ctk.CTkLabel(self.mac, text="Jour:").place(x=35, y=180)
+        jour_menu = ctk.CTkOptionMenu(self.mac, variable=self.jour_var, values=self.jours)
+        jour_menu.place(x=80, y=180)
 
-        btn_ajouter = ctk.CTkButton(button_frame, text="Ajouter", fg_color="green")
-        btn_ajouter.grid(row=0, column=1, padx=10, pady=10)
+        ctk.CTkLabel(self.mac, text="Salle:").place(x=280, y=180)
+        salle_entry = ctk.CTkEntry(self.mac, textvariable=self.salle_var)
+        salle_entry.place(x=350, y=180)
 
-        btn_supprimer = ctk.CTkButton(button_frame, text="Supprimer", fg_color="red")
-        btn_supprimer.grid(row=0, column=2, padx=10, pady=10)
+        # Bouton pour enregistrer les informations
+        save_button = ctk.CTkButton(self.mac, text="Enregistrer", command=self.save_schedule)
+        save_button.place(x=550, y=100)
 
-        switch = ctk.CTkSwitch(self.root, text="Light/Dark Mode", command=self.change_theme, variable=self.switch_var, onvalue="Dark", offvalue="Light")
-        switch.pack(pady=20)
 
-    def setup_table(self):
-        table_frame = ctk.CTkFrame(self.root, width=120)
-        table_frame.pack(pady=20, fill='both', expand=True)
+    
+        self.frameTableau = Frame(self.mac, bd=4)
+        self.frameTableau.place(x=5, y=215, width=950, height=480)  
+    
+    
+    def create_schedule_table(self):
+        self.labels = [[] for _ in range(len(self.heurs))]
+        for i, jour in enumerate(["HEURES/JOURS"] + self.jours):
+            label = ctk.CTkLabel(self.frameTableau, text=jour, text_color="black", padx=10, pady=5, fg_color="green" if i == 0 else "red")
+            label.grid(row=2, column=i, sticky="nsew")
 
-        # Create treeview with scrollbars
-        columns = ["Heure", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
-        
-        self.tree = ttk.Treeview(table_frame, columns=columns, show="headings", height=24)
-        self.tree.pack(side='left', expand=True)
-        
-        scrollbar = ttk.Scrollbar(table_frame, orient='vertical', command=self.tree.yview)
-        scrollbar.pack(side='right', fill='y')
-        
-        scrollbarx = ttk.Scrollbar(table_frame, orient='horizontal', command=self.tree.xview)
-        scrollbarx.pack(side='bottom', fill='x')
+        for i, heur in enumerate(self.heurs):
+            label = ctk.CTkLabel(self.frameTableau, text=heur, padx=10, pady=5, fg_color="orange")
+            label.grid(row=i + 3, column=0, sticky="nsew")
+            for j in range(len(self.jours)):
+                cell = ctk.CTkLabel(self.frameTableau, text="", text_color="black", padx=10, pady=5, fg_color="white")
+                cell.grid(row=i + 3, column=j + 1, sticky="nsew", padx=5, pady=5)
+                self.labels[i].append(cell)
 
-        self.tree.configure(yscrollcommand=scrollbar.set)
+        # Configuration des colonnes et lignes pour le redimensionnement automatique
+        for i in range(len(self.jours) + 1):
+            self.frameTableau.grid_columnconfigure(i, weight=1)
+        for i in range(len(self.heurs) + 3):
+            self.frameTableau.grid_rowconfigure(i, weight=1)
 
-        for col in columns:
-            self.tree.heading(col, text=col)
-            self.tree.column(col, width=100, anchor='center')
+    def save_schedule(self):
+        Filiere = self.Filiere_var.get()
+        Module = self.Module_var.get()
+        jour = self.jour_var.get()
+        heur = self.heur_var.get()
+        niveau = self.niveau_var.get()
+        salle = self.salle_var.get()
+        Enseigant_id = self.Enseigant_id_var.get()
 
-        self.populate_table()
+        if not all([jour, heur, Module, salle, Filiere, Enseigant_id, niveau]):
+            messagebox.showwarning("Champ manquant", "Veuillez remplir tous les champs.", parent=self.mac)
+            return
 
-    def populate_table(self):
-        # Example data, replace with your actual course schedule data
-        schedule_data = [
-            ("00:00 - 01:00", "", "", "", "", "", "", ""),
-            ("01:00 - 02:00", "", "", "", "", "", "", ""),
-            ("02:00 - 03:00", "", "", "", "", "", "", ""),
-            ("03:00 - 04:00", "", "", "", "", "", "", ""),
-            ("04:00 - 05:00", "", "", "", "", "", "", ""),
-            ("05:00 - 06:00", "", "", "", "", "", "", ""),
-            ("06:00 - 07:00", "", "", "", "", "", "", ""),
-            ("07:00 - 08:00", "", "", "", "", "", "", ""),
-            ("08:00 - 09:00", "", "", "", "", "", "", ""),
-            ("09:00 - 10:00", "PYTHON\nIGL_L2\nDr Soro", "", "", "", "", "", ""),
-            ("10:00 - 11:00", "", "AI\nRT_L2 & IGL_L2\nDr Johnson", "", "", "", "", ""),
-            ("11:00 - 12:00", "", "", "", "", "", "", ""),
-            ("12:00 - 13:00", "", "", "", "", "", "", ""),
-            ("13:00 - 14:00", "", "UI\nIGL_L2\nDr Ali", "", "", "", "", ""),
-            ("14:00 - 15:00", "", "", "", "", "", "", ""),
-            ("15:00 - 16:00", "", "", "", "", "", "", ""),
-            ("16:00 - 17:00", "", "", "", "", "", "", ""),
-            ("17:00 - 18:00", "", "", "", "", "", "", ""),
-            ("18:00 - 19:00", "", "", "", "", "", "", ""),
-            ("19:00 - 20:00", "", "", "", "", "", "", ""),
-            ("20:00 - 21:00", "", "", "", "", "", "", ""),
-            ("21:00 - 22:00", "", "", "", "", "", "", ""),
-            ("22:00 - 23:00", "", "", "", "", "", "", ""),
-            ("23:00 - 00:00", "", "", "", "", "", "", "")
-        ]
+        # Enregistrement des informations dans la base de données
+        try:
+            self.cursor.execute(
+                "INSERT INTO emploi_temps (Filière, Module, Date, Heure, Niveau, Salle, Id_Enseignant) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                (Filiere, Module, jour, heur, niveau, salle, Enseigant_id)
+            )
+            self.connection.commit()
+            messagebox.showinfo("Succès", "Emploi du temps enregistré avec succès.", parent=self.mac)
+        except mysql.connector.Error as err:
+            messagebox.showerror("Erreur", f"Erreur lors de l'enregistrement: {err}",parent=self.mac)
+            return
 
-        for i, row in enumerate(schedule_data):
-            tag = 'odd' if i % 2 == 0 else 'even'
-            self.tree.insert('', tk.END, values=row, tags=(tag,))
+        # Ajout des informations dans le tableau
+        row = self.heurs.index(heur) + 1
+        column = self.jours.index(jour) + 1
+        self.schedule[row][column] = f"{Module}\n{salle}\n{Filiere}\nID: {Enseigant_id}"
+        self.update_schedule()
 
-        self.tree.tag_configure('odd', background='#808080')
-        self.tree.tag_configure('even', background='green')
+    def update_schedule(self):
+        for i in range(len(self.heurs)):
+            for j in range(len(self.jours)):
+                cell_text = self.schedule[i + 1][j + 1]
+                self.labels[i][j].configure(text=cell_text)
+
+
+
+
+
 
 if __name__ == "__main__":
-    root = ctk.CTk()
-    app = GestionEmploiDuTempsApp(root)
-    root.mainloop()
+    Mac =  ctk.CTk()
+    obj = EmploiTemps(Mac)
+    Mac.mainloop()

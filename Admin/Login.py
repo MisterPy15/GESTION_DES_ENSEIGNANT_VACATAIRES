@@ -5,7 +5,6 @@ from Dashboard import Dashboard
 from tkinter import ttk, messagebox
 import mysql.connector
 from mysql.connector import Error
-from Dashboard import Dashboard
 
 
 
@@ -138,7 +137,7 @@ class Login:
                     user="root",
                     password="root",
                     database="vacataire",
-                    port=8889  # Assurez-vous que le port est correct
+                    port=8889 
                 )
                 cur = conn.cursor()
                 query = "SELECT * FROM personne where Email=%s"
