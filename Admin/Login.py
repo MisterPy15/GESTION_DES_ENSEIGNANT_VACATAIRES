@@ -31,7 +31,7 @@ class Login:
         apparenceOption.grid(row=6, column=0, padx=20, pady=20, sticky="s")
         
         
-        logoUTA = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/logo.jpeg")
+        logoUTA = Image.open(r"C:\Users\HP\Desktop\AlsonPersonalFiles\py\GESTION_DES_ENSEIGNANT_VACATAIRES\Img\empl tmps.pngImg/logo.jpeg")
         logoUTA = logoUTA.resize((450, 120))
         self.logo_UTA_login = ImageTk.PhotoImage(logoUTA)
         
@@ -41,7 +41,7 @@ class Login:
         
         
         
-        logoIcon = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/Icon1 login.png")
+        logoIcon = Image.open(r"C:\Users\HP\Desktop\AlsonPersonalFiles\py\GESTION_DES_ENSEIGNANT_VACATAIRES\Img\empl tmps.pngImg/Icon1 login.png")
         logoIcon = logoIcon.resize((450, 570))
         self.logo_Icon_login = ImageTk.PhotoImage(logoIcon)
         
@@ -139,7 +139,7 @@ class Login:
                     database="vacataire",
                     port=8889 
                 )
-                cur = conn.cursor()
+                cur = connection.cursor()
                 query = "SELECT * FROM personne where Email=%s"
                 cur.execute(query, self.entryEmail.get())
                 row = cur.fetchone()

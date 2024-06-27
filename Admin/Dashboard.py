@@ -40,7 +40,7 @@ class Dashboard:
         self.frameInfo = ct.CTkFrame(self.mac, width=1350, height=110)
         self.frameInfo.place(x=10, y=10)
 
-        logoUTA = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/logo.jpeg")
+        logoUTA = Image.open(r"C:\Users\HP\Desktop\AlsonPersonalFiles\py\GESTION_DES_ENSEIGNANT_VACATAIRES\Img\empl tmps.pngImg/logo.jpeg")
         logoUTA = logoUTA.resize((200, 100))
         self.logo_UTA_login = ImageTk.PhotoImage(logoUTA)
 
@@ -85,7 +85,7 @@ class Dashboard:
                                                         width=320, cursor="hand",font=("times new roman", 22, "bold"))
         btnProf.place(x=25, y=100)
         
-        lbl_Logo_Prof = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/Prof.png")
+        lbl_Logo_Prof = Image.open(r"C:\Users\HP\Desktop\AlsonPersonalFiles\py\GESTION_DES_ENSEIGNANT_VACATAIRES\Img\empl tmps.pngImg/Prof.png")
         lbl_Logo_Prof = lbl_Logo_Prof.resize((30, 30))
         self.logo_Prof_lbl = ImageTk.PhotoImage(lbl_Logo_Prof)
 
@@ -100,7 +100,7 @@ class Dashboard:
                                                         width=320, cursor="hand", font=("times new roman", 22, "bold"))
         btnFiliere.place(x=25, y=180)
         
-        lbl_Logo_Fili = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/Fillière.png")
+        lbl_Logo_Fili = Image.open(r"C:\Users\HP\Desktop\AlsonPersonalFiles\py\GESTION_DES_ENSEIGNANT_VACATAIRES\Img\empl tmps.pngImg/Fillière.png")
         lbl_Logo_Fili = lbl_Logo_Fili.resize((30, 30))
         self.logo_Fili_lbl = ImageTk.PhotoImage(lbl_Logo_Fili)
 
@@ -117,7 +117,7 @@ class Dashboard:
                                                         width=320, cursor="hand", font=("times new roman", 22, "bold"))
         btnEmploisDuTemps.place(x=25, y=260)
         
-        lbl_Logo_Emplois_tmp = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/empl tmps.png")
+        lbl_Logo_Emplois_tmp = Image.open(r"C:\Users\HP\Desktop\AlsonPersonalFiles\py\GESTION_DES_ENSEIGNANT_VACATAIRES\Img\empl tmps.pngImg/empl tmps.png")
         lbl_Logo_Emplois_tmp = lbl_Logo_Emplois_tmp.resize((30, 30))
         self.logo_Emplois_tmp_lbl = ImageTk.PhotoImage(lbl_Logo_Emplois_tmp)
 
@@ -132,7 +132,7 @@ class Dashboard:
                                                         width=320, cursor="hand", font=("times new roman", 22, "bold"))
         btnRapport.place(x=25, y=340)
         
-        lbl_Logo_Rapport = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/Rapport.png")
+        lbl_Logo_Rapport = Image.open(r"C:\Users\HP\Desktop\AlsonPersonalFiles\py\GESTION_DES_ENSEIGNANT_VACATAIRES\Img\empl tmps.pngImg/Rapport.png")
         lbl_Logo_Rapport = lbl_Logo_Rapport.resize((30, 30))
         self.logo_Rapport_lbl = ImageTk.PhotoImage(lbl_Logo_Rapport)
 
@@ -149,7 +149,7 @@ class Dashboard:
                                                         width=320, cursor="hand", font=("times new roman", 22, "bold"))
         btnParametre.place(x=25, y=420)
         
-        lbl_Logo_Parametre = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/Parametre.png")
+        lbl_Logo_Parametre = Image.open(r"C:\Users\HP\Desktop\AlsonPersonalFiles\py\GESTION_DES_ENSEIGNANT_VACATAIRES\Img\empl tmps.pngImg/Parametre.png")
         lbl_Logo_Parametre = lbl_Logo_Parametre.resize((30, 30))
         self.logo_Parametre_lbl = ImageTk.PhotoImage(lbl_Logo_Parametre)
 
@@ -217,7 +217,7 @@ class Dashboard:
         self.frameNbrProf.place(x=570, y=125)
         
         
-        IconProf = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/teacher.png")
+        IconProf = Image.open(r"C:\Users\HP\Desktop\AlsonPersonalFiles\py\GESTION_DES_ENSEIGNANT_VACATAIRES\Img\empl tmps.pngImg/teacher.png")
         IconProf = IconProf.resize((80, 80))
         
         self.Icon_ProfIcon = ImageTk.PhotoImage(IconProf)
@@ -244,7 +244,7 @@ class Dashboard:
         self.frameNbrFili = ct.CTkFrame(self.mac, width=250, height=70)
         self.frameNbrFili.place(x=970, y=125)
         
-        IconFili = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/graduation-hat.png")
+        IconFili = Image.open(r"C:\Users\HP\Desktop\AlsonPersonalFiles\py\GESTION_DES_ENSEIGNANT_VACATAIRES\Img\empl tmps.pngImg/graduation-hat.png")
         IconFili = IconFili.resize((80, 80))
         self.Icon_FiliIcon = ImageTk.PhotoImage(IconFili)
         

@@ -20,7 +20,7 @@ class Rapport:
                                            command=self.change_appearance_mode_event, fg_color="green")
         apparenceOption.place(x=750, y=25)
 
-        logoUTA = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/logo.jpeg")
+        logoUTA = Image.open(r"C:\Users\HP\Desktop\AlsonPersonalFiles\py\GESTION_DES_ENSEIGNANT_VACATAIRES\Img\empl tmps.pngImg/logo.jpeg")
         logoUTA = logoUTA.resize((200, 100))
         self.logo_UTA_login = ImageTk.PhotoImage(logoUTA)
 

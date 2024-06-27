@@ -17,7 +17,7 @@ class DashboardProf:
         self.frameInfo = ct.CTkFrame(self.mac, width=1350, height=110)
         self.frameInfo.place(x=10, y=10)
 
-        logoUTA = Image.open(r"/Users/misterpy/Desktop/cour_L2/Développement de Projet/Prof Vacataire/Img/logo.jpeg")
+        logoUTA = Image.open(r"C:\Users\HP\Desktop\AlsonPersonalFiles\py\GESTION_DES_ENSEIGNANT_VACATAIRES\Img\empl tmps.pngImg/logo.jpeg")
         logoUTA = logoUTA.resize((200, 100))
         self.logo_UTA_login = ImageTk.PhotoImage(logoUTA)
 
